@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>九藤少年大脑醒觉特训营</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; background: linear-gradient(135deg, #f0f9f4 0%, #e6f7ed 100%); color: #333; line-height: 1.6; }
+        .navbar { background: linear-gradient(135deg, #0f5c38 0%, #1a7f4e 100%); padding: 1rem 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .logo { color: white; font-size: 1.5rem; font-weight: bold; }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+        .nav-links a { color: white; text-decoration: none; font-weight: 500; cursor: pointer; }
+        .user-info { color: white; display: flex; align-items: center; gap: 15px; }
+        .points-badge { background: #ffd700; color: #333; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .section { display: none; animation: fadeIn 0.5s; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .hero { background: linear-gradient(135deg, #0f5c38 0%, #1a8f5a 100%); color: white; padding: 60px 20px; text-align: center; border-radius: 20px; margin: 20px 0; box-shadow: 0 10px 30px rgba(15, 92, 56, 0.2); }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+        .hero-subtitle { font-size: 1.3rem; margin-bottom: 30px; opacity: 0.95; }
+        .price-tag { background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); display: inline-block; padding: 15px 30px; border-radius: 50px; font-size: 1.2rem; margin: 20px 0; border: 2px solid rgba(255,255,255,0.3); }
+        .price-tag strong { font-size: 2rem; color: #ffd700; }
+        .cta-button { background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%); color: #333; border: none; padding: 15px 40px; font-size: 1.2rem; border-radius: 50px; cursor: pointer; font-weight: bold; transition: transform 0.3s, box-shadow 0.3s; margin-top: 20px; display: inline-block; text-decoration: none; }
+        .cta-button:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .card { background: white; border-radius: 15px; padding: 30px; margin: 20px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.08); border-left: 5px solid #0f5c38; }
+        .card h2 { color: #0f5c38; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 30px 0; }
+        .course-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: transform 0.3s; border: 2px solid transparent; }
+        .course-card:hover { transform: translateY(-5px); border-color: #0f5c38; }
+        .course-header { background: linear-gradient(135deg, #0f5c38 0%, #1a8f5a 100%); color: white; padding: 20px; text-align: center; }
+        .course-body { padding: 25px; }
+        .feature-list { list-style: none; margin: 15px 0; }
+        .feature-list li { padding: 8px 0; padding-left: 25px; position: relative; }
+        .feature-list li:before { content: "✓"; position: absolute; left: 0; color: #0f5c38; font-weight: bold; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; color: #0f5c38; font-weight: 600; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #0f5c38; }
+        .checkin-container { text-align: center; padding: 40px; background: linear-gradient(135deg, #f0f9f4 0%, #e6f7ed 100%); border-radius: 20px; margin: 30px 0; }
+        .checkin-btn { background: linear-gradient(135deg, #0f5c38 0%, #1a8f5a 100%); color: white; border: none; padding: 20px 60px; font-size: 1.5rem; border-radius: 50px; cursor: pointer; font-weight: bold; transition: all 0.3s; box-shadow: 0 10px 30px rgba(15, 92, 56, 0.3); }
+        .checkin-btn:hover { transform: scale(1.05); box-shadow: 0 15px 40px rgba(15, 92, 56, 0.4); }
+        .checkin-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        .leaderboard { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        .leaderboard-header { background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%); padding: 20px; text-align: center; font-weight: bold; font-size: 1.3rem; color: #333; }
+        .leaderboard-item { display: flex; align-items: center; padding: 15px 20px; border-bottom: 1px solid #eee; }
+        .rank { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 15px; }
+        .rank-1 { background: gold; color: #333; }
+        .rank-2 { background: silver; color: #333; }
+        .rank-3 { background: #cd7f32; color: white; }
+        .rank-other { background: #e0e0e0; color: #666; }
+        .user-name { flex: 1; font-weight: 600; }
+        .user-score { color: #0f5c38; font-weight: bold; font-size: 1.1rem; }
+        .tabs { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
+        .tab { padding: 10px 25px; background: white; border: 2px solid #0f5c38; color: #0f5c38; border-radius: 25px; cursor: pointer; transition: all 0.3s; font-weight: 600; }
+        .tab.active { background: #0f5c38; color: white; }
+        .hidden { display: none; }
+        @media (max-width: 768px) { .nav-links { display: none; } .hero h1 { font-size: 1.8rem; } .course-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">🧠 九藤少年</div>
+            <ul class="nav-links">
+                <li><a onclick="showSection('home')">首页</a></li>
+                <li><a onclick="showSection('register')">报名</a></li>
+                <li><a onclick="showSection('awaken')">醒觉课程</a></li>
+                <li><a onclick="showSection('review')">复训课程</a></li>
+                <li><a onclick="showSection('checkin')">每日打卡</a></li>
+                <li><a onclick="showSection('rank')">排行榜</a></li>
+            </ul>
+            <div class="user-info">
+                <span id="username-display">访客</span>
+                <span class="points-badge">⭐ <span id="points-display">0</span> 分</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section id="home" class="section active">
+            <div class="hero">
+                <h1>🧠 大脑醒觉特训营</h1>
+                <div class="hero-subtitle">6-18岁青少年右脑醒觉 · 科学赋能终身学习能力</div>
+                <div class="price-tag">全套课程 <strong>¥36,000</strong><br><small>2天醒觉 + 3节巩固 + 6个月48节提升</small></div><br>
+                <button class="cta-button" onclick="showSection('register')">立即报名</button>
+            </div>
+
+            <div class="course-grid">
+                <div class="course-card">
+                    <div class="course-header"><h3>🎯 2天醒觉集训</h3></div>
+                    <div class="course-body">
+                        <p>见证课程效果，无效承诺全额退款</p>
+                        <ul class="feature-list">
+                            <li>唤醒超强天赋</li><li>大脑显示器记忆法</li><li>提升3-10倍记忆力</li><li>过目不忘训练</li><li>过耳成诵训练</li>
+                        </ul>
+                        <button class="cta-button" style="width: 100%; padding: 12px; font-size: 1rem;" onclick="showSection('awaken')">查看详情</button>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-header" style="background: linear-gradient(135deg, #1e88e5 0%, #42a5f5 100%);"><h3>🔄 复训巩固</h3></div>
+                    <div class="course-body">
+                        <p>长期跟踪，持续进步</p>
+                        <ul class="feature-list">
+                            <li>3节巩固课程</li><li>6个月48节提升课</li><li>每日打卡监督</li><li>积分奖励机制</li><li>排行榜激励</li>
+                        </ul>
+                        <button class="cta-button" style="width: 100%; padding: 12px; font-size: 1rem; background: linear-gradient(135deg, #1e88e5 0%, #42a5f5 100%);" onclick="showSection('review')">查看详情</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>📚 九藤少年科学方法</h2>
+                <p><strong>授课老师：</strong>未来少儿教育研究院"脑科学工作组"专家老师</p>
+                <p><strong>技术指导：</strong>香港国际青少年大脑潜能研究会</p><br>
+                <h3>唤醒三大天赋：</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                    <div style="background: #f0f9f4; padding: 15px; border-radius: 10px; text-align: center;"><strong>过目不忘</strong><br><small>看一遍即可复述一篇文章</small></div>
+                    <div style="background: #f0f9f4; padding: 15px; border-radius: 10px; text-align: center;"><strong>过耳成诵</strong><br><small>听一遍即可复述一篇诗词</small></div>
+                    <div style="background: #f0f9f4; padding: 15px; border-radius: 10px; text-align: center;"><strong>大脑显示器记忆</strong><br><small>读一遍即可复述200字内课文</small></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="register" class="section">
+            <div class="card">
+                <h2>📝 课程报名</h2>
+                <form id="register-form" onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label>学生姓名 *</label>
+                        <input type="text" id="student-name" required placeholder="请输入学生姓名">
+                    </div>
+                    <div class="form-group">
+                        <label>年龄 *</label>
+                        <select id="student-age" required>
+                            <option value="">请选择年龄段</option>
+                            <option value="6-8">6-8岁</option>
+                            <option value="9-12">9-12岁</option>
+                            <option value="13-15">13-15岁</option>
+                            <option value="16-18">16-18岁</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>家长姓名 *</label>
+                        <input type="text" id="parent-name" required placeholder="请输入家长姓名">
+                    </div>
+                    <div class="form-group">
+                        <label>联系电话 *</label>
+                        <input type="tel" id="phone" required placeholder="请输入手机号码" pattern="[0-9]{11}">
+                    </div>
+                    <div class="form-group">
+                        <label>选择课程套餐 *</label>
+                        <select id="course-package" required>
+                            <option value="">请选择套餐</option>
+                            <option value="full">全套课程 ¥36,000（2天醒觉+3节巩固+6个月48节提升）</option>
+                            <option value="awaken">仅醒觉课程 ¥12,000（2天集训）</option>
+                            <option value="trial">体验课 ¥99（1节试听课）</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="cta-button" style="width: 100%;">提交报名</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="awaken" class="section">
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab(this, 'day1')">第一天</div>
+                <div class="tab" onclick="switchTab(this, 'day2')">第二天</div>
+                <div class="tab" onclick="switchTab(this, 'method')">记忆方法</div>
+            </div>
+            <div id="day1" class="tab-content">
+                <div class="card">
+                    <h2>第一天：基础唤醒 <span style="background: #0f5c38; color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem;">500积分</span></h2>
+                    <ul class="feature-list">
+                        <li>右脑潜能激活理论讲解</li><li>大脑显示器记忆法入门</li><li>视觉记忆训练（过目不忘基础）</li><li>听觉记忆训练（过耳成诵基础）</li><li>现场记忆测试与评估</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="day2" class="tab-content hidden">
+                <div class="card">
+                    <h2>第二天：能力固化 <span style="background: #0f5c38; color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem;">500积分</span></h2>
+                    <ul class="feature-list">
+                        <li>学科应用实践（语文/英语）</li><li>快速记忆实战演练</li><li>长期记忆保持技巧</li><li>个人记忆宫殿构建</li><li>结业考核与成果展示</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="method" class="tab-content hidden">
+                <div class="card">
+                    <h2>大脑显示器记忆法</h2>
+                    <p>通过特定训练激活右脑成像能力，使大脑像显示器一样"看到"文字和图像，实现：</p>
+                    <div class="course-grid" style="margin-top: 20px;">
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;"><h3 style="color: #0f5c38;">正背</h3><p>从第一个字背到最后一个字</p></div>
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;"><h3 style="color: #0f5c38;">倒背</h3><p>从最后一个字背到第一个字</p></div>
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;"><h3 style="color: #0f5c38;">抽背</h3><p>随机抽取任意位置内容背诵</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="review" class="section">
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab(this, 'consolidate')">3节巩固</div>
+                <div class="tab" onclick="switchTab(this, 'enhance')">48节提升</div>
+                <div class="tab" onclick="switchTab(this, 'schedule')">课程表</div>
+            </div>
+            <div id="consolidate" class="tab-content">
+                <div class="card">
+                    <h2>3节巩固课程 <span style="background: #ffd700; color: #333; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem;">每节+300分</span></h2>
+                    <p>醒觉集训后的密集巩固，确保技能稳定掌握</p>
+                    <ul class="feature-list" style="margin-top: 15px;">
+                        <li><strong>第1节（第1周）：</strong>记忆力检测与强化</li>
+                        <li><strong>第2节（第2周）：</strong>学科融合应用</li>
+                        <li><strong>第3节（第4周）：</strong>综合验收与个性化指导</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="enhance" class="tab-content hidden">
+                <div class="card">
+                    <h2>6个月48节提升课程 <span style="background: #ffd700; color: #333; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem;">每节+200分</span></h2>
+                    <p>每周2次线上/线下课程，持续6个月</p>
+                    <ul class="feature-list" style="margin-top: 15px;">
+                        <li>九大能力持续训练（记忆、专注、理解、想象、创造、观察、感知、思维、自控）</li>
+                        <li>学科实战：语文古诗词、英语单词、历史年代</li>
+                        <li>每月能力测评与排名</li>
+                        <li>期末记忆大师认证</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="schedule" class="tab-content hidden">
+                <div class="card">
+                    <h2>课程时间安排</h2>
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                        <tr style="background: #0f5c38; color: white;"><th style="padding: 12px; text-align: left;">阶段</th><th style="padding: 12px; text-align: left;">时间</th><th style="padding: 12px; text-align: left;">频次</th></tr>
+                        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 12px;">醒觉集训</td><td style="padding: 12px;">周末2天</td><td style="padding: 12px;">连续2天</td></tr>
+                        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 12px;">巩固课程</td><td style="padding: 12px;">晚上/周末</td><td style="padding: 12px;">共3节</td></tr>
+                        <tr><td style="padding: 12px;">提升课程</td><td style="padding: 12px;">每周二、四</td><td style="padding: 12px;">6个月48节</td></tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="checkin" class="section">
+            <div class="checkin-container">
+                <h2 style="color: #0f5c38; margin-bottom: 20px;">📍 每日学习打卡</h2>
+                <p style="margin-bottom: 30px; color: #666;">坚持打卡，积累积分，冲击排行榜！</p>
+                <button id="checkin-btn" class="checkin-btn" onclick="handleCheckin()">立即打卡 +500分</button>
+                <div id="checkin-status" style="margin-top: 20px; color: #666;">今日还未打卡，快来学习吧！</div>
+                <div style="margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: left;">
+                    <div class="card" style="margin: 0;">
+                        <h4>积分规则：</h4>
+                        <ul class="feature-list" style="margin-top: 10px; font-size: 0.9rem;">
+                            <li>醒觉课程：+500分/次</li><li>巩固课程：+300分/次</li><li>提升课程：+200分/次</li><li>连续7天：额外+1000分</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="margin: 0;">
+                        <h4>我的记录：</h4>
+                        <p style="margin-top: 10px;">总打卡天数：<strong id="total-days">0</strong> 天</p>
+                        <p>连续打卡：<strong id="streak-days">0</strong> 天</p>
+                        <p>上次打卡：<span id="last-checkin">从未</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="rank" class="section">
+            <div class="leaderboard">
+                <div class="leaderboard-header">🏆 学习积分榜 TOP 10</div>
+                <div id="leaderboard-list">
+                    <div class="leaderboard-item"><div class="rank rank-1">🥇</div><div class="user-name">张小明</div><div class="user-score">8500 分</div></div>
+                    <div class="leaderboard-item"><div class="rank rank-2">🥈</div><div class="user-name">李小红</div><div class="user-score">7200 分</div></div>
+                    <div class="leaderboard-item"><div class="rank rank-3">🥉</div><div class="user-name">王小华</div><div class="user-score">6800 分</div></div>
+                    <div class="leaderboard-item"><div class="rank rank-other">4</div><div class="user-name">刘小强</div><div class="user-score">5400 分</div></div>
+                    <div class="leaderboard-item"><div class="rank rank-other">5</div><div class="user-name">陈小雨</div><div class="user-score">4900 分</div></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        let currentUser = localStorage.getItem('currentUser') || null;
+        let points = parseInt(localStorage.getItem('points') || '0');
+        let checkinHistory = JSON.parse(localStorage.getItem('checkins') || '[]');
+        
+        window.onload = function() {
+            updateUserDisplay();
+            updateCheckinStatus();
+            if (currentUser) document.getElementById('username-display').textContent = currentUser;
+        };
+        
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+        
+        function switchTab(tab, contentId) {
+            tab.parentElement.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+            document.getElementById(contentId).classList.remove('hidden');
+        }
+        
+        function handleRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('student-name').value;
+            currentUser = name;
+            localStorage.setItem('currentUser', name);
+            alert(`报名成功！欢迎 ${name} 加入九藤少年大脑醒觉特训营！\n新学员奖励：+1000积分！`);
+            addPoints(1000, "新学员注册奖励");
+            document.getElementById('username-display').textContent = name;
+            showSection('home');
+        }
+        
+        function handleCheckin() {
+            const today = new Date().toISOString().split('T')[0];
+            if (checkinHistory.includes(today)) {
+                alert('今天已经打卡过了，明天再来吧！');
+                return;
+            }
+            checkinHistory.push(today);
+            localStorage.setItem('checkins', JSON.stringify(checkinHistory));
+            addPoints(500, "课程学习打卡");
+            
+            let streak = 1;
+            const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
+            const yesterdayStr = yesterday.toISOString().split('T')[0];
+            if (checkinHistory.includes(yesterdayStr)) {
+                for (let i = checkinHistory.length - 2; i >= 0; i--) {
+                    const prev = new Date(checkinHistory[i]);
+                    const curr = new Date(checkinHistory[i+1]);
+                    if ((curr - prev) / (1000 * 60 * 60 * 24) === 1) streak++;
+                    else break;
+                }
+                if (streak % 7 === 0) {
+                    addPoints(1000, `连续${streak}天打卡奖励`);
+                    alert(`太棒了！连续打卡${streak}天！额外奖励1000积分！`);
+                }
+            }
+            alert('打卡成功！积分+500！继续加油！');
+            updateCheckinStatus();
+        }
+        
+        function addPoints(amount, reason) {
+            points += amount;
+            localStorage.setItem('points', points.toString());
+            updateUserDisplay();
+        }
+        
+        function updateUserDisplay() {
+            document.getElementById('points-display').textContent = points;
+        }
+        
+        function updateCheckinStatus() {
+            const today = new Date().toISOString().split('T')[0];
+            const btn = document.getElementById('checkin-btn');
+            const status = document.getElementById('checkin-status');
+            document.getElementById('total-days').textContent = checkinHistory.length;
+            
+            let streak = 0;
+            if (checkinHistory.length > 0) {
+                const sorted = checkinHistory.sort();
+                const last = new Date(sorted[sorted.length - 1]);
+                const now = new Date();
+                if ((now - last) / (1000 * 60 * 60 * 24) <= 1) {
+                    streak = 1;
+                    for (let i = sorted.length - 2; i >= 0; i--) {
+                        const diff = (new Date(sorted[i+1]) - new Date(sorted[i])) / (1000 * 60 * 60 * 24);
+                        if (diff === 1) streak++;
+                        else break;
+                    }
+                }
+            }
+            document.getElementById('streak-days').textContent = streak;
+            document.getElementById('last-checkin').textContent = checkinHistory.length > 0 ? checkinHistory[checkinHistory.length - 1] : '从未';
+            
+            if (checkinHistory.includes(today)) {
+                btn.disabled = true;
+                btn.textContent = '今日已打卡 ✓';
+                btn.style.background = '#ccc';
+                status.textContent = '今天已完成打卡，明天再来继续学习吧！';
+                status.style.color = '#0f5c38';
+            }
+        }
+    </script>
+</body>
+</html>

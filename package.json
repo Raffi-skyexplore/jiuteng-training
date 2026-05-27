@@ -1,0 +1,27 @@
+{
+  "name": "dev",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "JZIB 公益积分站",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "d1:migrate": "wrangler d1 migrations apply jzib_points --local",
+    "d1:remote:migrate": "wrangler d1 migrations apply jzib_points --remote",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run typecheck"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "hono": "^4.7.10"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@cloudflare/workers-types": "^4.20260520.1",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.93.0"
+  }
+}

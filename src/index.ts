@@ -1966,7 +1966,7 @@ function renderProfilePage(input: {
         <strong>${formatDate(input.profile.created_at).slice(0, 10)}</strong>
       </article>
     </section>
-    <section class="board-layout">
+    <section class="board-layout profile-posts-layout">
       <div class="board-main">
         <div class="section-head">
           <h2>我发过的帖子</h2>
@@ -1978,11 +1978,6 @@ function renderProfilePage(input: {
             : `<div class="empty-card">你还没有发过帖子。</div>`
         }
       </div>
-      <aside class="board-side">
-        <div class="panel-card">
-          <div class="sidebar-visual">${renderPhotoWall(PROFILE_ART_SOURCES, "sidebar")}</div>
-        </div>
-      </aside>
     </section>
   `;
 }
@@ -2409,10 +2404,10 @@ function styles(): string {
       color: var(--ink);
       font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
       background:
-        radial-gradient(circle at 12% 8%, rgba(255, 246, 176, 0.42), transparent 26%),
-        radial-gradient(circle at 88% 18%, rgba(83, 126, 76, 0.24), transparent 30%),
-        radial-gradient(circle at 48% 92%, rgba(255, 255, 255, 0.28), transparent 34%),
-        linear-gradient(160deg, #dceab9 0%, var(--paper) 48%, var(--paper-deep) 100%);
+        radial-gradient(circle at 12% 8%, rgba(255, 248, 151, 0.58), transparent 25%),
+        radial-gradient(circle at 88% 18%, rgba(58, 111, 55, 0.38), transparent 29%),
+        radial-gradient(circle at 48% 92%, rgba(255, 255, 255, 0.36), transparent 34%),
+        linear-gradient(160deg, #e6f2bd 0%, var(--paper) 44%, #8fad5c 100%);
       background-size: auto, auto, auto, auto;
       overflow-x: hidden;
     }
@@ -2423,11 +2418,11 @@ function styles(): string {
       pointer-events: none;
       z-index: 0;
       background:
-        radial-gradient(ellipse at 18% 18%, rgba(255, 255, 255, 0.58), transparent 34%),
-        radial-gradient(ellipse at 84% 62%, rgba(180, 219, 117, 0.48), transparent 34%),
-        linear-gradient(120deg, rgba(255,255,255,0.18), transparent 30%, rgba(255,255,255,0.24));
-      opacity: 0.95;
-      mix-blend-mode: soft-light;
+        radial-gradient(ellipse at 18% 18%, rgba(255, 255, 255, 0.68), transparent 32%),
+        radial-gradient(ellipse at 84% 62%, rgba(141, 184, 72, 0.58), transparent 34%),
+        linear-gradient(120deg, rgba(255,255,255,0.28), transparent 28%, rgba(255,255,255,0.34));
+      opacity: 1;
+      mix-blend-mode: overlay;
     }
     body::after {
       content: "";
@@ -2436,10 +2431,10 @@ function styles(): string {
       pointer-events: none;
       z-index: 0;
       background:
-        linear-gradient(112deg, transparent 24%, rgba(255,255,255,0.1) 34%, rgba(255,255,255,0.78) 44%, rgba(255,255,255,0.2) 53%, transparent 66%),
-        linear-gradient(112deg, transparent 46%, rgba(255, 238, 155, 0.52) 53%, rgba(222, 255, 172, 0.34) 58%, transparent 68%),
-        linear-gradient(72deg, transparent 35%, rgba(113, 155, 83, 0.34) 48%, transparent 61%);
-      opacity: 0.92;
+        linear-gradient(112deg, transparent 22%, rgba(255,255,255,0.14) 32%, rgba(255,255,255,0.94) 43%, rgba(255,255,255,0.28) 53%, transparent 66%),
+        linear-gradient(112deg, transparent 44%, rgba(255, 231, 91, 0.68) 53%, rgba(210, 255, 130, 0.52) 59%, transparent 69%),
+        linear-gradient(72deg, transparent 34%, rgba(55, 110, 53, 0.48) 48%, transparent 62%);
+      opacity: 1;
       mix-blend-mode: screen;
       transform: translate3d(-18%, -8%, 0);
       animation: shimmerFlow 11s ease-in-out infinite alternate;
@@ -3042,6 +3037,9 @@ function styles(): string {
     .board-layout {
       grid-template-columns: minmax(0, 1.65fr) 320px;
       align-items: start;
+    }
+    .profile-posts-layout {
+      grid-template-columns: 1fr;
     }
     .board-main,
     .board-side,

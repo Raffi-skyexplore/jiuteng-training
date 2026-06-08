@@ -1779,7 +1779,7 @@ function renderComposePage(): string {
     <section class="feature-visual-card feature-visual-card-compose feature-visual-card-gallery">
       <div class="feature-visual-media">${renderPhotoWall(COMPOSE_ART_SOURCES, "hero")}</div>
     </section>
-    <section class="board-layout">
+    <section class="board-layout compose-form-layout">
       <div class="board-main">
         <form class="compose-card stack" method="post" action="/app/posts" enctype="multipart/form-data">
           <label class="field">
@@ -1810,15 +1810,6 @@ function renderComposePage(): string {
           <button class="button button-primary button-block" type="submit">发布帖子</button>
         </form>
       </div>
-      <aside class="board-side">
-        <div class="panel-card">
-          <div class="sidebar-visual">${renderPhotoWall(COMPOSE_ART_SOURCES, "sidebar")}</div>
-        </div>
-        <div class="panel-card">
-          <h3>匿名说明</h3>
-          <p class="muted">匿名只隐藏公开展示名称，不代表可以发布失实内容。管理员仍然可以处理违规内容。</p>
-        </div>
-      </aside>
     </section>
     <script>${composePageScript()}</script>
   `;
@@ -3038,6 +3029,7 @@ function styles(): string {
       grid-template-columns: minmax(0, 1.65fr) 320px;
       align-items: start;
     }
+    .compose-form-layout,
     .profile-posts-layout {
       grid-template-columns: 1fr;
     }

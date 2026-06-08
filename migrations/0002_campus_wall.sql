@@ -1,3 +1,14 @@
+DROP TABLE IF EXISTS exchange_requests;
+DROP TABLE IF EXISTS points_ledger;
+DROP TABLE IF EXISTS rewards;
+DROP TABLE IF EXISTS submissions;
+
+DROP INDEX IF EXISTS idx_sessions_expires;
+DROP INDEX IF EXISTS idx_sessions_expires_at;
+
+DROP TABLE IF EXISTS sessions;
+DROP TABLE IF EXISTS users;
+
 CREATE TABLE IF NOT EXISTS users (
   id TEXT PRIMARY KEY,
   account TEXT NOT NULL UNIQUE,

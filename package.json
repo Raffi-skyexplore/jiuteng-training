@@ -3,11 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "JZIB 公益积分站",
+  "description": "JZIB 校园墙",
   "scripts": {
     "dev": "wrangler dev",
+    "dev:worker": "wrangler dev --env dev",
     "deploy": "wrangler deploy",
+    "deploy:dev": "wrangler deploy --env dev",
+    "deploy:prod": "wrangler deploy",
     "d1:migrate": "wrangler d1 migrations apply jzib_points --local",
+    "d1:dev:migrate": "wrangler d1 migrations apply DB --env dev --remote",
     "d1:remote:migrate": "wrangler d1 migrations apply jzib_points --remote",
     "typecheck": "tsc --noEmit",
     "test": "npm run typecheck"
